@@ -18,8 +18,10 @@ def parse_args():
     parser.add_argument('--learning_rate', type=float, default=0.1)
     
     # data directories
-    parser.add_argument('--train', type=str, default=os.environ.get('SM_CHANNEL_TRAIN'))
-    parser.add_argument('--val', type=str, default=os.environ.get('SM_CHANNEL_VAL'))
+    #parser.add_argument('--train', type=str, default=os.environ.get('SM_CHANNEL_TRAIN'))
+    #parser.add_argument('--val', type=str, default=os.environ.get('SM_CHANNEL_VAL'))
+    parser.add_argument('--train', type=str, default='/opt/ml/data/train')
+    parser.add_argument('--val', type=str, default='/opt/ml/data/val')
     
     # model directory: we will use the default set by SageMaker, /opt/ml/model
     parser.add_argument('--model_dir', type=str, default=os.environ.get('SM_MODEL_DIR'))
