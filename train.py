@@ -3,6 +3,7 @@ import numpy as np
 import os
 import tensorflow as tf
 
+
 from model_def import get_model
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
@@ -20,6 +21,7 @@ def parse_args():
     # data directories
     parser.add_argument('--train', type=str, default=os.environ.get('SM_CHANNEL_TRAIN'))
     parser.add_argument('--test', type=str, default=os.environ.get('SM_CHANNEL_TEST'))
+    parser.add_argument('--class_weights', type=str, default=os.environ.get('SM_CHANNEL_CLASS_WEIGHTS'))
     
     # model directory: we will use the default set by SageMaker, /opt/ml/model
     parser.add_argument('--model_dir', type=str, default=os.environ.get('SM_MODEL_DIR'))
@@ -43,6 +45,12 @@ def get_test_data(test_dir):
     print('x test', x_test.shape,'y test', y_test.shape)
 
     return x_test, y_test
+
+def get_class_weights(column_weights_dir):
+    print('path to class_weights:', os.path.join(class_weights_dir, 'class_weights.npy'))
+    class_weights = np.load(os.path.join(class_weights_dir, 'class_weights.npy'))
+    print('class_weights:', class_weights)
+    return class_weights
    
 
 if __name__ == "__main__":
@@ -51,6 +59,7 @@ if __name__ == "__main__":
     
     x_train, y_train = get_train_data(args.train)
     x_test, y_test = get_test_data(args.test)
+    class_weights = get_class_weights(args.class_weights)
     
     device = '/cpu:0' 
     print(device)
@@ -63,10 +72,10 @@ if __name__ == "__main__":
         
         model = get_model()
         optimizer = tf.keras.optimizers.SGD(learning_rate)
-        model.compile(optimizer=optimizer, loss=tf.keras.metrics.AUC())  
+        model.compile(optimizer=optimizer, loss='binary_crossentropy')  
         # model.compile(optimizer=optimizer, loss='mse')
         model.fit(x_train, y_train, batch_size=batch_size, epochs=epochs,
-                  validation_data=(x_test, y_test))
+                  validation_data=(x_test, y_test), class_weight=class_weights)
 
         # evaluate on test set
         scores = model.evaluate(x_test, y_test, batch_size, verbose=2)
