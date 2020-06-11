@@ -36,7 +36,7 @@ def get_train_data(train_dir):
     return X_train, y_train
 
 
-def get_val_data(test_dir):
+def get_val_data(val_dir):
     
     X_val = np.load(os.path.join(val_dir, 'X_val.npy'))
     y_val = np.load(os.path.join(val_dir, 'y_val.npy'))
@@ -60,7 +60,6 @@ if __name__ == "__main__":
     print('batch_size = {}, epochs = {}, learning rate = {}'.format(batch_size, epochs, learning_rate))
 
     with tf.device(device):
-        
         model = get_model()
         optimizer = tf.keras.optimizers.SGD(learning_rate)
         model.compile(optimizer=optimizer, loss=tf.keras.metrics.AUC)    
