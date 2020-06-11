@@ -60,7 +60,7 @@ if __name__ == "__main__":
     
     x_train, y_train = get_train_data(args.train)
     x_test, y_test = get_test_data(args.test)
-    print('class_weights_dir:', 'args.class_weights)
+    print('class_weights_dir:', args.class_weights)
     class_weights = get_class_weights(args.class_weights)
     
     device = '/cpu:0' 
