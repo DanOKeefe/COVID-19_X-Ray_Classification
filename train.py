@@ -47,6 +47,7 @@ def get_test_data(test_dir):
     return x_test, y_test
 
 def get_class_weights(class_weights_dir):
+    print('class_weights_dir:', class_weights_dir)
     print('path to class_weights:', os.path.join(class_weights_dir, 'class_weights.npy'))
     class_weights = np.load(os.path.join(class_weights_dir, 'class_weights.npy'))
     print('class_weights:', class_weights)
@@ -59,6 +60,7 @@ if __name__ == "__main__":
     
     x_train, y_train = get_train_data(args.train)
     x_test, y_test = get_test_data(args.test)
+    print('class_weights_dir:', 'args.class_weights)
     class_weights = get_class_weights(args.class_weights)
     
     device = '/cpu:0' 
