@@ -29,28 +29,28 @@ def parse_args():
 
 def get_train_data(train_dir):
     
-    X_train = np.load(os.path.join(train_dir, 'X_train.npy'))
-    y_train = np.load(os.path.join(train_dir, 'X_train.npy'))
-    print('X train', X_train.shape,'y train', y_train.shape)
+    x_train = np.load(os.path.join(train_dir, 'x_train.npy'))
+    y_train = np.load(os.path.join(train_dir, 'y_train.npy'))
+    print('x train', x_train.shape,'y train', y_train.shape)
 
-    return X_train, y_train
+    return x_train, y_train
 
 
 def get_test_data(test_dir):
     
-    X_test = np.load(os.path.join(test_dir, 'X_test.npy'))
+    x_test = np.load(os.path.join(test_dir, 'x_test.npy'))
     y_test = np.load(os.path.join(test_dir, 'y_test.npy'))
-    print('X test', X_test.shape,'y test', y_test.shape)
+    print('x test', x_test.shape,'y test', y_test.shape)
 
-    return X_test, y_test
+    return x_test, y_test
    
 
 if __name__ == "__main__":
         
     args, _ = parse_args()
     
-    X_train, y_train = get_train_data(args.train)
-    X_test, y_test = get_test_data(args.test)
+    x_train, y_train = get_train_data(args.train)
+    x_test, y_test = get_test_data(args.test)
     
     device = '/cpu:0' 
     print(device)
@@ -60,15 +60,16 @@ if __name__ == "__main__":
     print('batch_size = {}, epochs = {}, learning rate = {}'.format(batch_size, epochs, learning_rate))
 
     with tf.device(device):
+        
         model = get_model()
         optimizer = tf.keras.optimizers.SGD(learning_rate)
         model.compile(optimizer=optimizer, loss=tf.keras.metrics.AUC)    
-        model.fit(X_train, y_train, batch_size=batch_size, epochs=epochs,
-                  validation_data=(X_val, y_val))
+        model.fit(x_train, y_train, batch_size=batch_size, epochs=epochs,
+                  validation_data=(x_test, y_test))
 
-        # evaluate on validation set
-        scores = model.evaluate(X_val, y_val, batch_size, verbose=2)
-        print("\nVal MSE :", scores)
+        # evaluate on test set
+        scores = model.evaluate(x_test, y_test, batch_size, verbose=2)
+        print("\nTest MSE :", scores)
         
         # save model
         model.save(args.model_dir + '/1')
