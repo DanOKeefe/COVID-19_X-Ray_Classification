@@ -31,18 +31,18 @@ def get_train_data(train_dir):
     
     X_train = np.load(os.path.join(train_dir, 'X_train.npy'))
     y_train = np.load(os.path.join(train_dir, 'y_train.npy'))
-    print('X train', x_train.shape,'y train', y_train.shape)
+    print('X train', X_train.shape,'y train', y_train.shape)
 
     return X_train, y_train
 
 
 def get_val_data(test_dir):
     
-    X_test = np.load(os.path.join(val_dir, 'X_val.npy'))
-    y_test = np.load(os.path.join(val_dir, 'y_val.npy'))
-    print('X val', x_test.shape,'y test', y_test.shape)
+    X_val = np.load(os.path.join(val_dir, 'X_val.npy'))
+    y_val = np.load(os.path.join(val_dir, 'y_val.npy'))
+    print('X val', X_val.shape,'y val', y_val.shape)
 
-    return X_test, y_test
+    return X_val, y_val
    
 
 if __name__ == "__main__":
@@ -50,7 +50,7 @@ if __name__ == "__main__":
     args, _ = parse_args()
     
     X_train, y_train = get_train_data(args.train)
-    X_test, y_test = get_test_data(args.test)
+    X_val, y_val = get_val_data(args.test)
     
     device = '/cpu:0' 
     print(device)
