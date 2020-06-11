@@ -18,6 +18,4 @@ def get_model():
     dense_1 = tf.keras.layers.Dense(512, activation='relu')(flatten)
     outputs = tf.keras.layers.Dense(1, activation='sigmoid')(dense_1)
     
-    
-    outputs = tf.keras.layers.Dense(1)(hidden_2)
     return tf.keras.Model(inputs=inputs, outputs=outputs)
