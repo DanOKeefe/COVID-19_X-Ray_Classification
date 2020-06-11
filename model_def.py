@@ -11,7 +11,7 @@ def get_model():
     
     conv_3 = tf.keras.layers.Conv2D(64, (3, 3), padding='same', activation='relu')(drop_1)
     conv_4 = tf.keras.layers.Conv2D(64, (3, 3), activation='relu')(conv_3)
-    maxpool_2 = tf.keras.layers.MaxPooling2D(pool_size(2, 2))(conv_4)
+    maxpool_2 = tf.keras.layers.MaxPooling2D(pool_size = (2, 2))(conv_4)
     drop_2 = tf.keras.layers.Dropout(0.25)(maxpool_2)
     
     flatten = tf.keras.layers.Flatten()(drop_2)
