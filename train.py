@@ -19,7 +19,7 @@ def parse_args():
     
     # data directories
     parser.add_argument('--train', type=str, default=os.environ.get('SM_CHANNEL_TRAIN'))
-    parser.add_argument('--test', type=str, default=os.environ.get('SM_CHANNEL_TEST'))
+    parser.add_argument('--val', type=str, default=os.environ.get('SM_CHANNEL_VAL'))
     
     # model directory: we will use the default set by SageMaker, /opt/ml/model
     parser.add_argument('--model_dir', type=str, default=os.environ.get('SM_MODEL_DIR'))
@@ -50,7 +50,7 @@ if __name__ == "__main__":
     args, _ = parse_args()
     
     X_train, y_train = get_train_data(args.train)
-    X_val, y_val = get_val_data(args.test)
+    X_val, y_val = get_val_data(args.val)
     
     device = '/cpu:0' 
     print(device)
@@ -66,9 +66,9 @@ if __name__ == "__main__":
         model.fit(X_train, y_train, batch_size=batch_size, epochs=epochs,
                   validation_data=(X_val, y_val))
 
-        # evaluate on test set
+        # evaluate on validation set
         scores = model.evaluate(X_val, y_val, batch_size, verbose=2)
-        print("\nTest MSE :", scores)
+        print("\nVal MSE :", scores)
         
         # save model
         model.save(args.model_dir + '/1')
