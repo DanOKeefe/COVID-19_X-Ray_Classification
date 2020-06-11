@@ -18,10 +18,10 @@ def parse_args():
     parser.add_argument('--learning_rate', type=float, default=0.1)
     
     # data directories
-    #parser.add_argument('--train', type=str, default=os.environ.get('SM_CHANNEL_TRAIN'))
-    #parser.add_argument('--val', type=str, default=os.environ.get('SM_CHANNEL_VAL'))
-    parser.add_argument('--train', type=str, default='/opt/ml/data/train')
-    parser.add_argument('--val', type=str, default='/opt/ml/data/val')
+    # In your training script the channels will be stored in environment variables SM_CHANNEL_TRAIN and SM_CHANNEL_TEST. 
+    # You can add them to your argument parsing logic like this:
+    parser.add_argument('--train', type=str, default=os.environ.get('SM_CHANNEL_TRAIN'))
+    parser.add_argument('--test', type=str, default=os.environ.get('SM_CHANNEL_TEST'))
     
     # model directory: we will use the default set by SageMaker, /opt/ml/model
     parser.add_argument('--model_dir', type=str, default=os.environ.get('SM_MODEL_DIR'))
@@ -52,7 +52,7 @@ if __name__ == "__main__":
     args, _ = parse_args()
     
     X_train, y_train = get_train_data(args.train)
-    X_val, y_val = get_val_data(args.val)
+    X_val, y_val = get_val_data(args.test)
     
     device = '/cpu:0' 
     print(device)
