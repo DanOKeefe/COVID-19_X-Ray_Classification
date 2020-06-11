@@ -63,8 +63,8 @@ if __name__ == "__main__":
         
         model = get_model()
         optimizer = tf.keras.optimizers.SGD(learning_rate)
-        #model.compile(optimizer=optimizer, loss=tf.keras.metrics.AUC)  
-        model.compile(optimizer=optimizer, loss='mse')
+        model.compile(optimizer=optimizer, loss=tf.keras.metrics.AUC())  
+        # model.compile(optimizer=optimizer, loss='mse')
         model.fit(x_train, y_train, batch_size=batch_size, epochs=epochs,
                   validation_data=(x_test, y_test))
 
