@@ -14,12 +14,10 @@ def parse_args():
 
     # hyperparameters sent by the client are passed as command-line arguments to the script
     parser.add_argument('--epochs', type=int, default=1)
-    parser.add_argument('--batch_size', type=int, default=16)
+    parser.add_argument('--batch_size', type=int, default=64)
     parser.add_argument('--learning_rate', type=float, default=0.1)
     
     # data directories
-    # In your training script the channels will be stored in environment variables SM_CHANNEL_TRAIN and SM_CHANNEL_TEST. 
-    # You can add them to your argument parsing logic like this:
     parser.add_argument('--train', type=str, default=os.environ.get('SM_CHANNEL_TRAIN'))
     parser.add_argument('--test', type=str, default=os.environ.get('SM_CHANNEL_TEST'))
     
@@ -31,28 +29,28 @@ def parse_args():
 
 def get_train_data(train_dir):
     
-    X_train = np.load(os.path.join(train_dir, 'X_train.npy'))
+    x_train = np.load(os.path.join(train_dir, 'x_train.npy'))
     y_train = np.load(os.path.join(train_dir, 'y_train.npy'))
-    print('X train', X_train.shape,'y train', y_train.shape)
+    print('x train', x_train.shape,'y train', y_train.shape)
 
-    return X_train, y_train
+    return x_train, y_train
 
 
-def get_val_data(val_dir):
+def get_test_data(test_dir):
     
-    X_val = np.load(os.path.join(val_dir, 'X_val.npy'))
-    y_val = np.load(os.path.join(val_dir, 'y_val.npy'))
-    print('X val', X_val.shape,'y val', y_val.shape)
+    x_test = np.load(os.path.join(test_dir, 'x_test.npy'))
+    y_test = np.load(os.path.join(test_dir, 'y_test.npy'))
+    print('x test', x_test.shape,'y test', y_test.shape)
 
-    return X_val, y_val
+    return x_test, y_test
    
 
 if __name__ == "__main__":
         
     args, _ = parse_args()
     
-    X_train, y_train = get_train_data(args.train)
-    X_val, y_val = get_val_data(args.test)
+    x_train, y_train = get_train_data(args.train)
+    x_test, y_test = get_test_data(args.test)
     
     device = '/cpu:0' 
     print(device)
