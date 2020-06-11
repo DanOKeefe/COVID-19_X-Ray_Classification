@@ -46,7 +46,7 @@ def get_test_data(test_dir):
 
     return x_test, y_test
 
-def get_class_weights(column_weights_dir):
+def get_class_weights(class_weights_dir):
     print('path to class_weights:', os.path.join(class_weights_dir, 'class_weights.npy'))
     class_weights = np.load(os.path.join(class_weights_dir, 'class_weights.npy'))
     print('class_weights:', class_weights)
