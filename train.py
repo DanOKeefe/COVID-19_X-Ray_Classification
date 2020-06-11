@@ -29,28 +29,28 @@ def parse_args():
 
 def get_train_data(train_dir):
     
-    x_train = np.load(os.path.join(train_dir, 'x_train.npy'))
-    y_train = np.load(os.path.join(train_dir, 'y_train.npy'))
-    print('x train', x_train.shape,'y train', y_train.shape)
+    X_train = np.load(os.path.join(train_dir, 'X_train.npy'))
+    y_train = np.load(os.path.join(train_dir, 'X_train.npy'))
+    print('X train', X_train.shape,'y train', y_train.shape)
 
-    return x_train, y_train
+    return X_train, y_train
 
 
 def get_test_data(test_dir):
     
-    x_test = np.load(os.path.join(test_dir, 'x_test.npy'))
+    X_test = np.load(os.path.join(test_dir, 'X_test.npy'))
     y_test = np.load(os.path.join(test_dir, 'y_test.npy'))
-    print('x test', x_test.shape,'y test', y_test.shape)
+    print('X test', X_test.shape,'y test', y_test.shape)
 
-    return x_test, y_test
+    return X_test, y_test
    
 
 if __name__ == "__main__":
         
     args, _ = parse_args()
     
-    x_train, y_train = get_train_data(args.train)
-    x_test, y_test = get_test_data(args.test)
+    X_train, y_train = get_train_data(args.train)
+    X_test, y_test = get_test_data(args.test)
     
     device = '/cpu:0' 
     print(device)
