@@ -37,9 +37,11 @@ def get_train_data(train_dir):
 
 
 def get_test_data(test_dir):
-    print('path to X_test:', os.path.join(test_dir, 'X_test.npy'))
-    x_test = np.load(os.path.join(test_dir, 'X_test.npy'))
-    y_test = np.load(os.path.join(test_dir, 'y_test.npy'))
+    x_test = np.load('/opt/ml/input/data/test/X_test.npy')
+    y_test = np.load('/opt/ml/input/data/test/y_test.npy')
+    #print('path to X_test:', os.path.join(test_dir, 'X_test.npy'))
+    #x_test = np.load(os.path.join(test_dir, 'X_test.npy'))
+    #y_test = np.load(os.path.join(test_dir, 'y_test.npy'))
     print('x test', x_test.shape,'y test', y_test.shape)
 
     return x_test, y_test
