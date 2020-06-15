@@ -48,8 +48,8 @@ def get_test_data(test_dir):
 
 def get_class_weights(class_weights_dir):
     print('class_weights_dir:', class_weights_dir)
-    print('path to class_weights:', os.path.join(class_weights_dir, 'class_weights.npy'))
-    class_weights = np.load(os.path.join(class_weights_dir, 'class_weights.npy'))
+    print('path to class_weights:', os.path.join(class_weights_dir, 'classweights.npy'))
+    class_weights = np.load(os.path.join(class_weights_dir, 'classweights.npy'))
     print('class_weights:', class_weights)
     return class_weights
    
